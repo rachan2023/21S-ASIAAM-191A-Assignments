@@ -1,0 +1,1 @@
+{"type":"FeatureCollection","features":[{"type":"Feature","properties":{"place":"California","color":"red"},"geometry":{"type":"Point","coordinates":[-116.71973705291748,37.44886693777098]}},{"type":"Feature","properties":{"place":"Nevada","color":"blue"},"geometry":{"type":"Point","coordinates":[-118.30078125,34.23451236236987]}}]}

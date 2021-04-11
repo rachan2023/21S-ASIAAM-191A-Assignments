@@ -8,6 +8,10 @@ html, body {
      grid-template-columns: 1fr;
      grid-template-areas: "header" "main" "map"  "footer";
      justify-content: center;
+     background-color: rgb(195, 210, 224);
+     color:rgba(61, 116, 126, 0.959);
+
+     
  }
 
  header {
@@ -15,17 +19,19 @@ html, body {
     display: grid;
     grid-template-columns: .2fr .6fr .2fr;
     justify-content: center;
+    text-align: center;
+    color:rgb(0, 0, 0);
  }
 
 .main {
     display: grid;
     grid-area: main;
-    background-color: aqua;
+    background-color:  rgb(195, 210, 224));
 }
 
 #map {
     grid-area: map;
-    height: 100vh;
+    height: 50vh;
 }
 
 #footer {
