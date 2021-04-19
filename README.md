@@ -32,3 +32,4 @@ Note: Most assignments will require a  write-up in markdown (`.md`) detailing yo
 
 ## What about group assignments?
 Do not submit your group work here. Group assignments will be submitted on your own separate repository.
+
