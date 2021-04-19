@@ -1,3 +1,5 @@
+# Index.html link: https://rachan2023.github.io/21S-ASIAAM-191A-Assignments/Week_03/index.html
+
 # Lab Assignment - Map Portfolio FUNctions
 ## Due 4/22
 
