@@ -19,11 +19,10 @@ var myIcon = L.icon({
     shadowAnchor: [22, 94]
 });
 
-
 // create a function to add markers
 function pstarMarker(lat,lng,title,message){
     console.log(message)
-    L.marker([lat,lng],{icon: myIcon}).addTo(map).bindPopup(`<h2>${message}</h2>`)
+    L.marker([lat,lng],{icon: myIcon}).addTo(map).bindPopup(`<h2>${message}</h2>`).openPopup();
     createButtons(lat,lng,title); // new line!!!
     return message
 }
@@ -50,9 +49,9 @@ function createButtons(lat,lng,title){
 // use our marker functions
 pstarMarker(36.8879,-118.5551, 'Kings Canyon','Kings Canyon: nice for hiking')
 pstarMarker(37.6251, -119.0850, 'Devils Postpile','Devils Postpile National Monument: has unique rock patterns')
-pstarMarker(36.0544,-112.1401, 'Grand Canyon','Grand Canyon National Park: very hot in the summer')
-pstarMarker(38.2692, -119.5742,'Sierra Nevada Mountains','Sierra Nevada Mountains: visit when there is snow')
-pstarMarker(41.288139, -70.098923,'Easton Beach','Easton Beach: cloudy during the summer, but the beach is gorgeous and clean')
-pstarMarker(44.4280, -110.5885,'Yellowstone','Yellowstone National Park: Old Faithful is a sight to see')
-pstarMarker(39.0575, -108.6939,'Colorado National Monument','Colorado National Monument: nice views')
-pstarMarker(37.8651, -119.5383,'Yosemite','Yosemite National Park: can see waterfalls, tall trees, and bear cubs during daytime')
+pstarMarker(36.0544,-112.1401, 'Grand Canyon','Grand Canyon National Park: hot in the summer')
+pstarMarker(38.2692, -119.5742,'Sierra Nevada Mountains','Sierra Nevada Mountains: snow! ')
+pstarMarker(41.288139, -70.098923,'Easton Beach','Easton Beach: the beach and the surrounding area is very quiet')
+pstarMarker(44.4280, -110.5885,'Yellowstone','Yellowstone National Park: lots of geysers, which I rarely see in California  ')
+pstarMarker(39.0575, -108.6939,'Colorado National Monument','Colorado National Monument: breathtaking views')
+pstarMarker(37.8651, -119.5383,'Yosemite','Yosemite National Park: waterfalls and bear cubs during the daytime')
