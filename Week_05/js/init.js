@@ -15,7 +15,7 @@ fetch(url)
     })
 
 function addMarker(data){
-        L.marker([data.lat,data.lng]).addTo(map).bindPopup(`<h2>${data.whereisyourfavoritetraveldestinationincalifornia}</h2>${"Number of times visited: " + data.howmanytimeshaveyouvisitedyourfavoritetraveldestination} <p>${"Best season to visit: " + data.whatseasonisthebesttimetovisityourfavoritetraveldestination}</p>`)
+        L.marker([data.lat,data.lng]).addTo(map).bindPopup(`<h2>${data.whereisyourfavoritetraveldestination}</h2>${"Number of times visited: " + data.howmanytimeshaveyouvisitedyourfavoritetraveldestination} <p>${"Best season to visit: " + data.whatseasonisthebesttimetovisityourfavoritetraveldestination}</p>`)
         return data   
 }
 
