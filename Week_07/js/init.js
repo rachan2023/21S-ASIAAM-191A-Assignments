@@ -1,14 +1,16 @@
 const map = L.map('map').setView([37.7749, -122.4194], 10);
 
-let OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-	maxZoom: 17,
-	attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+let Stadia_Outdoors = L.tileLayer('https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png', {
+	maxZoom: 50,
+	attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 });
-OpenTopoMap.addTo(map)
 
-let speakFluentEnglish = L.featureGroup();
-let speakOtherLanguage = L.featureGroup();
+Stadia_Outdoors.addTo(map)
 
+let Fall = L.featureGroup();
+let Winter = L.featureGroup();
+let Spring = L.featureGroup();
+let Summer = L.featureGroup();
 
 let url = "https://spreadsheets.google.com/feeds/list/1ErJfY74kCqb2yvCt_MzLyJUvB-tNF5JD9TwxnCybTJs/o9c8k0l/public/values?alt=json"
 fetch(url)
@@ -21,38 +23,68 @@ fetch(url)
     })
 
 let circleOptions = {
-    radius: 4,
+    radius: 6,
     fillColor: "#ff7800",
     color: "#000",
     weight: 1,
     opacity: 1,
-    fillOpacity: 0.8
+    fillOpacity: .3
 }
+
+let myFieldArray = []
+
+function getDistinctValues(targetField){
+    // find out how to add distinct values to an array 
+
+    if (!myFieldArray.includes(targetField)){
+        myFieldArray.push(targetField)
+    } 
+    return targetField
+      // append values to array 
+}
+
 
 function addMarker(data){
         //L.marker([data.lat,data.lng]).addTo(map).bindPopup(`<h2>${data.whereisyourfavoritetraveldestination}</h2> <p>${"Number of times visited: " + data.howmanytimeshaveyouvisitedyourfavoritetraveldestination} </p> <p> ${"Best season to visit: " + data.whatseasonisthebesttimetovisityourfavoritetraveldestination} </p> <h4> ${"Date Posted: " + data.timestamp} </h4>`)
-        //createButtons(data.lat,data.lng,data.whereisyourfavoritetraveldestination);
-        if (data.doyouspeakenglishfluently == "Yes"){
-            circleOptions.fillColor == 'green'
-            speakFluentEnglish.addLayer(L.circleMarker([data.lat,data.lng]).bindPopup(`<h2>Speaks English fluently</h2>`))
-            createButtons(data.lat,data.lng,data.location)
+        //createButtons(data.lat,data.lng,data.whereisyourfavoritetraveldestination)
+        let myField = data.howmanytimeshaveyouvisitedyourfavoritetraveldestination
+        let travelSeason = data.whatseasonisthebesttimetovisityourfavoritetraveldestination
+        createButtons(data.lat,data.lng,data.whereisyourfavoritetraveldestination)
+        getDistinctValues(myField)
+        console.log('all the distinct fields')
+        console.log(myFieldArray)
+        colorArray = ['green','blue','red','purple']
+        // circleOptions.fillColor = 'green'
+        circleOptions.fillColor = colorArray[myFieldArray.indexOf(myField)]
+        if (travelSeason == "Fall"){          // fix this to diff 
+            
+            // speakFluentEnglish.addLayer(L.circleMarker([data.lat,data.lng], circleOptions).bindPopup(`<h2>Speaks English fluently</h2>`))
+            // createButtons(data.lat,data.lng,data.whereisyourfavoritetraveldestination)
+            Fall.addLayer(L.circleMarker([data.lat,data.lng], circleOptions).addTo(map).bindPopup(`<h2>${data.whereisyourfavoritetraveldestination}</h2> <p>${"Number of times visited: " + myField} </p> <p> ${"Best season to visit: " + data.whatseasonisthebesttimetovisityourfavoritetraveldestination} </p> <h4> ${"Date Posted: " + data.timestamp} </h4>`))
+            
             return data.timestamp
         }
-        else {
-            circleOptions.color == 'red'
-            speakOtherLanguage.addLayer(L.circleMarker([data.lat,data.lng]).bindPopup(`<h2> Does not speak English fluently</h2>`))
+        else if (travelSeason == "Spring") {
+            Spring.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>${data.whereisyourfavoritetraveldestination}</h2> <p>${"Number of times visited: " + myField} </p> <p> ${"Best season to visit: " + data.whatseasonisthebesttimetovisityourfavoritetraveldestination} </p> <h4> ${"Date Posted: " + data.timestamp} </h4>`))
         }
+        else if (travelSeason == "Winter") {
+            Winter.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>${data.whereisyourfavoritetraveldestination}</h2> <p>${"Number of times visited: " + myField} </p> <p> ${"Best season to visit: " + data.whatseasonisthebesttimetovisityourfavoritetraveldestination} </p> <h4> ${"Date Posted: " + data.timestamp} </h4>`))
+        }
+        else {
+            Summer.addLayer(L.circleMarker([data.lat,data.lng],circleOptions).bindPopup(`<h2>${data.whereisyourfavoritetraveldestination}</h2> <p>${"Number of times visited: " + myField} </p> <p> ${"Best season to visit: " + data.whatseasonisthebesttimetovisityourfavoritetraveldestination} </p> <h4> ${"Date Posted: " + data.timestamp} </h4>`))
+        }
+       
         return data   
 }
 
-function createButtons(lat,lng,whereisyourfavoritetraveldestination){
+function createButtons(lat,lng,anything){
     const newButton = document.createElement("button"); // adds a new button
-    newButton.id = "button"+whereisyourfavoritetraveldestination; // gives the button a unique id
-    newButton.innerHTML = whereisyourfavoritetraveldestination; // gives the button a title
+    newButton.id = "button"+anything; // gives the button a unique id
+    newButton.innerHTML = anything; // gives the button a title
     newButton.setAttribute("lat",lat); // sets the latitude 
     newButton.setAttribute("lng",lng); // sets the longitude 
     newButton.addEventListener('click', function(){
-        map.flyTo([lat,lng]); //this is the flyTo from Leaflet
+        map.flyTo([lat,lng], 10); //this is the flyTo from Leaflet
     })
     const spaceForButtons = document.getElementById('contents')
     spaceForButtons.appendChild(newButton);//this adds the button to our page.
@@ -73,13 +105,17 @@ function formatData(theData){
         }
         console.log(formattedData)
         formattedData.forEach(addMarker)    
-        speakFluentEnglish.addTo(map)
-        speakOtherLanguage.addTo(map)   
-        let allLayers = L.featureGroup([speakFluentEnglish, speakOtherLanguage]);
+        Fall.addTo(map)
+        Winter.addTo(map)   
+        Spring.addTo(map)
+        Summer.addTo(map) 
+        let allLayers = L.featureGroup([Fall, Winter, Spring, Summer]);
         map.fitBounds(allLayers.getBounds()); 
 }
 let layers = {
-	"Speaks English": speakFluentEnglish,
-	"Speaks Other Languages": speakOtherLanguage
+	"Fall": Fall,
+	"Winter": Winter,
+    "Spring" : Spring,
+    "Summer" : Summer
 }
 L.control.layers(null,layers).addTo(map)

@@ -1,10 +1,9 @@
 body{
     display:grid;
-    /*grid-template-rows: .2fr .6fr .2fr;*/
-    grid-auto-rows: minmax(5px, auto);
+    grid-template-rows: .2fr .6fr .2fr;
     grid-template-columns: 1fr 1fr 1fr; /* this creates an even two column layout*/
     grid-template-areas: ". header header" "contentspanel mappanel sidepanel" "footer footer footer" /* this creates one row with map panel on the left and sidepanel on the right */
-    
+
 }
 header {
     grid-area: header;
