@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Favorite Places in CA </title>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="#">
+        <link rel="stylesheet" href="style/style.css">
+
+        <!-- Leaflet's css-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+        <!-- Leaflet's JavaScript-->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    </head>
+    
+    <body>
+        <header> <h3> A Map of People's Favorite Destinations in California </h3> </header> <!-- added this-->
+        <div id="contents"></div>
+        <!-- add before the map div, or after, either way works.
+         Because we will define the layout in CSS Grid -->
+        <div id="map"></div>
+        <div id="survey">
+        <!-- this is the iframe for our survey -->
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScuorsR3hFmo3JiTIEV4AuccfF5WTwVq33wsFrSz_4VVskFXA/viewform?embedded=true" width="640" height="955" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        </div>
+        <script src="js/init.js"></script>
+    </body>
+</html>
