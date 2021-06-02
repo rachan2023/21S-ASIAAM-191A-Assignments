@@ -8,10 +8,19 @@ let CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/
 
 CartoDB_Positron.addTo(map)
 
-let Fall = L.featureGroup();
-let Winter = L.featureGroup();
-let Spring = L.featureGroup();
-let Summer = L.featureGroup();
+let mcg = L.markerClusterGroup({
+    spiderfyOnMaxZoom: false,
+	showCoverageOnHover: true,
+	zoomToBoundsOnClick: true
+}); 
+
+
+
+let Fall = L.featureGroup.subGroup(mcg);
+let Winter = L.featureGroup.subGroup(mcg);
+let Spring = L.featureGroup.subGroup(mcg);
+let Summer = L.featureGroup.subGroup(mcg);
+
 
 let url = "https://spreadsheets.google.com/feeds/list/1ErJfY74kCqb2yvCt_MzLyJUvB-tNF5JD9TwxnCybTJs/o9c8k0l/public/values?alt=json"
 fetch(url)
@@ -61,7 +70,7 @@ function addMarker(data){
             
             // speakFluentEnglish.addLayer(L.circleMarker([data.lat,data.lng], circleOptions).bindPopup(`<h2>Speaks English fluently</h2>`))
             // createButtons(data.lat,data.lng,data.whereisyourfavoritetraveldestination)
-            Fall.addLayer(L.circleMarker([data.lat,data.lng], circleOptions).addTo(map).bindPopup(`<h2>${data.whereisyourfavoritetraveldestination}</h2> <p>${"Number of times visited: " + myField} </p> <p> ${"Best season to visit: " + data.whatseasonisthebesttimetovisityourfavoritetraveldestination} </p> <h4> ${"Date Posted: " + data.timestamp} </h4>`))
+            Fall.addLayer(L.circleMarker([data.lat,data.lng], circleOptions).bindPopup(`<h2>${data.whereisyourfavoritetraveldestination}</h2> <p>${"Number of times visited: " + myField} </p> <p> ${"Best season to visit: " + data.whatseasonisthebesttimetovisityourfavoritetraveldestination} </p> <h4> ${"Date Posted: " + data.timestamp} </h4>`))
             
             return data.timestamp
         }
@@ -106,11 +115,13 @@ function formatData(theData){
         }
         console.log(formattedData)
         formattedData.forEach(addMarker)    
-        Fall.addTo(map)
-        Winter.addTo(map)   
-        Spring.addTo(map)
-        Summer.addTo(map) 
-        let allLayers = L.featureGroup([Fall, Winter, Spring, Summer]);
+        // Fall.addTo(map)
+        // Winter.addTo(map)   
+        // Spring.addTo(map)
+        // Summer.addTo(map) 
+        let allLayers = L.markerClusterGroup([Fall, Winter, Spring, Summer]);
+        allLayers.addTo(map)
+        mcg.addTo(map)
         map.fitBounds(allLayers.getBounds()); 
 }
 let layers = {
@@ -119,4 +130,4 @@ let layers = {
     "Spring" : Spring,
     "Summer" : Summer
 }
-L.control.layers(null,layers).addTo(map)
+L.control.layers(null,layers, {collapsed: false}).addTo(map)
